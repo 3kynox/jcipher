@@ -22,6 +22,7 @@ def mix():
 
     return ''.join(alphabet).upper()
 
+# Generate a file with n lines of mix() function
 def createCylinder(file, n):
     cylinder = open(file, "w")
     output = ''
@@ -33,6 +34,21 @@ def createCylinder(file, n):
     cylinder.write(output)
     cylinder.close()
 
+# 
+def loadCylinder(file):
+    dict = {}
+    i = 1
+    
+    try:
+        with open(file, 'r') as openfile:
+            for line in openfile:
+                dict[i] = line.rstrip()
+                i += 1
+            openfile.close()
+            return dict
+    except:
+        return "The file does not exists!"
+
 #################### TEST AREA ####################
 
 # Test function convertLetters()
@@ -40,5 +56,8 @@ def createCylinder(file, n):
 #print(convertLetters(userInput))
 
 # Test function createCylinder()
-createCylinder('cylinder.txt', 26)
+#createCylinder('cylinder.txt', 26)
+
+# Test function loadCylinder()
+print(loadCylinder('cylinderr.txt'))
 
