@@ -1,5 +1,4 @@
-import collections
-import string
+import collections, string, random
 
 # Take a text and format it without spaces, accents and special chars
 def convertLetters(text):
@@ -16,6 +15,14 @@ def convertLetters(text):
     
     return text.translate(table,)
 
-userInput = input('Enter your input: ')
-print(convertLetters(userInput))
+# Takes alphabet letters and return it uppercase shuffled
+def mix():
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    alphabet = random.sample(alphabet, len(alphabet))
+
+    return ''.join(alphabet).upper()
+
+#userInput = input('Enter your input: ')
+#print(convertLetters(userInput))
+print(mix())
 
