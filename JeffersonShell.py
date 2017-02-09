@@ -22,7 +22,23 @@ def mix():
 
     return ''.join(alphabet).upper()
 
+def createCylinder(file, n):
+    cylinder = open(file, "w")
+    output = ''
+
+    for line in range(n):
+        output += mix()
+        output += '\n'
+
+    cylinder.write(output)
+    cylinder.close()
+
+#################### TEST AREA ####################
+
+# Test function convertLetters()
 #userInput = input('Enter your input: ')
 #print(convertLetters(userInput))
-print(mix())
+
+# Test function createCylinder()
+createCylinder('cylinder.txt', 26)
 
