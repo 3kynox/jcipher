@@ -13,6 +13,7 @@ def main():
     surface = pygame.Surface(screen.get_size())
     surface = surface.convert()
     surface.fill((0, 0, 0))
+    font = pygame.font.Font('AgencyFB_Light_Wide.ttf', 36)
     
     # Functions
     def displayCylinder(mySurface, cylinder, i):
@@ -24,10 +25,18 @@ def main():
     def enterKey(mySurface, n):
         return True
 
-    
+    def rotateCylinder(cylinder, i, up = True):
+        return True
+
+    def rotateCylinders(mySurface, cylinder):
+        return True
 
     # Main Loop
     while play_again:
+        text = font.render("GDILVJJNHS", 1, (249, 0, 0))
+        textpos = text.get_rect(centerx=surface.get_width()/2)
+        surface.blit(text, textpos)
+        
         # Events loop
         for event in pygame.event.get():
             # Manage quit / closing window event
