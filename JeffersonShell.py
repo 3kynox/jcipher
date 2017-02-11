@@ -114,20 +114,20 @@ def unCipherText(cylinder, key, text):
 #################### TEST AREA ####################
 
 # Uncrypt Mini-TP text (error here 35 letters with 36 numbered key!!?!!)
-cylinder = loadCylinder('MP-1ARI.txt')
-key = [12, 16, 29, 6, 33, 9, 22, 15, 20, 3, 1, 30, 32, 36, 19, 10, 35, 27, 25, 26, 2, 18, 31, 14, 34, 17, 23, 7, 8, 21, 4, 13, 11, 24, 28, 5]
-print("UnCrypted MINI-TP Text : " + unCipherText(cylinder, key, "GRMYSGBOAAMQGDPEYVWLDFDQQQZXXVMSZFSN"))
+#cylinder = loadCylinder('MP-1ARI.txt')
+#key = [12, 16, 29, 6, 33, 9, 22, 15, 20, 3, 1, 30, 32, 36, 19, 10, 35, 27, 25, 26, 2, 18, 31, 14, 34, 17, 23, 7, 8, 21, 4, 13, 11, 24, 28, 5]
+#print("UnCrypted MINI-TP Text : " + unCipherText(cylinder, key, "GRMYSGBOAAMQGDPEYVWLDFDQQQZXXVMSZFSN"))
 
-cylinder = loadCylinder('cylinderWiki.txt')
-key = [7, 9, 5, 10, 1, 6, 3, 8, 2, 4]
-print("WikiPedia Example : " + cipherText(cylinder, key, "Retreat Now"))
+#cylinder = loadCylinder('cylinderWiki.txt')
+#key = [7, 9, 5, 10, 1, 6, 3, 8, 2, 4]
+#print("WikiPedia Example : " + cipherText(cylinder, key, "Retreat Now"))
 
 # Chiffrer un texte de votre choix avec un cylindre et une clé de votre choix
-cylinder = loadCylinder('cylinder.txt')
-print("MINI-TP Asked Encoded Text : " + cipherText(cylinder, key, "Lorem ipsum"))
+#cylinder = loadCylinder('cylinder.txt')
+#print("MINI-TP Asked Encoded Text : " + cipherText(cylinder, key, "Lorem ipsum"))
 
-cylinder = loadCylinder('cylinder.txt')
-print("MINI-TP Decoded Text : " + unCipherText(cylinder, key, "GDILVJJNHS"))
+#cylinder = loadCylinder('cylinder.txt')
+#print("MINI-TP Decoded Text : " + unCipherText(cylinder, key, "GDILVJJNHS"))
 
 
 
