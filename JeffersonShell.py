@@ -80,7 +80,7 @@ def shift(i):
 def cipherLetter(letter, alphabet):
     return alphabet[shift(find(letter, alphabet))]
 
-#
+# Returns encrypted string according to a keyList and cylinderList
 def cipherText(cylinder, key, text):
     encryptedText = ''
     
@@ -100,3 +100,5 @@ cylinder = loadCylinder('cylinder.txt')
 #key = createKey(10)
 key = [1, 2, 10, 4, 7, 6, 9, 3, 5, 8]
 print(cipherText(cylinder, key, "Retreat Now"))
+
+
