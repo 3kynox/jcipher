@@ -34,7 +34,7 @@ def createCylinder(file, n):
     cylinder.write(output)
     cylinder.close()
 
-# 
+# Return a dictionary from createCylinder file content
 def loadCylinder(file):
     dict = {}
     i = 1
@@ -49,6 +49,23 @@ def loadCylinder(file):
     except:
         return "The file does not exists!"
 
+# Check if there is n elements in key list
+# and if elements from 1 to n exists in key list
+def keyOK(key, n):
+    if len(key) == n:
+        for i in range(1, n + 1):
+            if i in key:
+                continue
+            else:
+                return False
+        return True
+    else:
+        return False
+    
+# Returns int list of n shuffled elements
+def createKey(n):
+    return random.sample(range(1, n + 1), n)
+
 #################### TEST AREA ####################
 
 # Test function convertLetters()
@@ -59,5 +76,9 @@ def loadCylinder(file):
 #createCylinder('cylinder.txt', 26)
 
 # Test function loadCylinder()
-print(loadCylinder('cylinderr.txt'))
+#print(loadCylinder('cylinderr.txt'))
+
+# Test keyOK() - createKey()
+myList = createKey(11)
+print(keyOK(myList, 11))
 
