@@ -83,10 +83,8 @@ def shift(i):
 def cipherLetter(letter, alphabet):
     print(alphabet)
     if letter.isupper():
-        for i in range(len(alphabet)):
-            if letter == alphabet[i]:
-                print(i)
-                return alphabet[shift(i)]
+        i = find(letter, alphabet)
+        return alphabet[shift(i)]
     else:
         return 'Error: The first parameter must be an uppercase letter !'
 
@@ -101,18 +99,11 @@ def cipherText(cylinder, key, text):
 
 #################### TEST AREA ####################
 
-# Test function convertLetters()
-#userInput = input('Enter your input: ')
-#print(convertLetters(userInput))
-
 # Test function find()
 #print(find('L', mix()))
 
-# Test function shift()
-#print(shift(12))
-
 # Test function cipherLetter()
-#print(cipherLetter('L', mix()))
+print(cipherLetter('L', mix()))
 
 # Test function cipherText()
 createCylinder('cylinder.txt', 10)
