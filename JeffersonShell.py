@@ -75,6 +75,10 @@ def find(letter, alphabet):
     else:
         return 'Error: The first parameter must be an uppercase letter !'
 
+# Return modulo [26] of (i + 6)
+def shift(i):
+    return (i + 6) % 26
+
 #################### TEST AREA ####################
 
 # Test function convertLetters()
@@ -92,5 +96,7 @@ def find(letter, alphabet):
 #print(keyOK(myList, 11))
 
 # Test function find()
-print(find('L', mix()))
+#print(find('L', mix()))
 
+# Test function shift()
+print(shift(12))
