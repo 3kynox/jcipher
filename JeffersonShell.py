@@ -79,6 +79,18 @@ def find(letter, alphabet):
 def shift(i):
     return (i + 6) % 26
 
+# Return letter + index of 6 in a circular way
+def cipherLetter(letter, alphabet):
+    if letter.isupper():
+        for i in range(len(alphabet)):
+            if letter == alphabet[i]:
+                i = i + 6
+                if i > 25:
+                    i = i - 26
+                return alphabet[i]
+    else:
+        return 'Error: The first parameter must be an uppercase letter !'
+
 #################### TEST AREA ####################
 
 # Test function convertLetters()
@@ -99,4 +111,7 @@ def shift(i):
 #print(find('L', mix()))
 
 # Test function shift()
-print(shift(12))
+#print(shift(12))
+
+# Test function cipherLetter()
+print(cipherLetter('L', mix()))
