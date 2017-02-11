@@ -7,8 +7,9 @@ pygame.init()
 
 def main():
     # Init vars
+    global n
     play_again = 1
-    size = width, height = 800, 700
+    size = width, height = 800, 750
     screen = pygame.display.set_mode(size)
     surface = pygame.Surface(screen.get_size())
     surface = surface.convert()
@@ -17,6 +18,7 @@ def main():
 
     # Define later ability to load cylinder file
     cylinder = loadCylinder('cylinder.txt')
+    n = len(cylinder)
     
     # Functions
     def displayCylinder(mySurface, cylinder, i):
@@ -36,7 +38,7 @@ def main():
         y = 10
         text = ''
 
-        for i in range(1, len(cylinder)):
+        for i in range(1, n + 1):
             for c in range(len(cylinder[i])):
                 text = cylinder[i][c]
                 renderText = font.render(text, 0, (249, 0, 0))
@@ -46,7 +48,14 @@ def main():
             y = y + 40
 
     def enterKey(mySurface, n):
-        return True
+        x = 25 + (26 * 25)
+        y = 10
+
+        for key, value in cylinder.items():
+            text = str(key)
+            renderText = font.render(text, 0, (249, 0, 0))
+            mySurface.blit(renderText, (y, x))
+            y = y + 40
 
     def rotateCylinder(cylinder, i, up = True):
         return True
@@ -57,6 +66,7 @@ def main():
     # Main Loop
     while play_again:
         displayCylinders(surface, cylinder)
+        enterKey(surface, n)
         
         # Events loop
         for event in pygame.event.get():
