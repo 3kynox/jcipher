@@ -13,16 +13,21 @@ def main():
     surface = pygame.Surface(screen.get_size())
     surface = surface.convert()
     surface.fill((0, 0, 0))
-    font = pygame.font.Font('AgencyFB_Light_Wide.ttf', 36)
+    font = pygame.font.Font('AgencyFB_Light_Wide.ttf', 20)
 
     # Define later ability to load cylinder file
     cylinder = loadCylinder('cylinder.txt')
     
     # Functions
     def displayCylinder(mySurface, cylinder, i):
-    
-        text = font.render(cylinder[i], 1, (249, 0, 0))
-        mySurface.blit(text, (0, 0))
+        x = 0
+        text = ''
+        
+        for c in range(len(cylinder[i])):
+            text = cylinder[i][c]
+            renderText = font.render(text, 0, (249, 0, 0))
+            mySurface.blit(renderText, (10, x + 10))
+            x = x + 20
 
     def displayCylinders(mySurface, cylinder):
         return True
