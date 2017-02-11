@@ -93,12 +93,30 @@ def cipherText(cylinder, key, text):
     else:
         return 'Error: Invalid key !'
 
+#################### UN-CRYPT ####################
+def unShift(i):
+    return (i - 6) % 26
+
+def unCipherLetter(letter, alphabet):
+    return alphabet[unShift(find(letter, alphabet))]
+
+def unCipherText(cylinder, key, text):
+    unCryptedText = ''
+    
+    if keyOK(key, len(cylinder)):
+        for i, c in enumerate(text):
+            unCryptedText += unCipherLetter(c, cylinder[key[i]])
+        return unCryptedText
+    else:
+        return 'Error: Invalid key !'
+    
 #################### TEST AREA ####################
 # Test function cipherText()
 #createCylinder('cylinder.txt', 10)
-cylinder = loadCylinder('cylinder.txt')
+cylinder = loadCylinder('MP-1ARI.txt')
 #key = createKey(10)
-key = [1, 2, 10, 4, 7, 6, 9, 3, 5, 8]
-print(cipherText(cylinder, key, "Retreat Now"))
+key = [12, 16, 29, 6, 33, 9, 22, 15, 20, 3, 1, 30, 32, 36, 19, 10, 35, 27, 25, 26, 2, 18, 31, 14, 34, 17, 23, 7, 8, 21, 4, 13, 11, 24, 28, 5]
+print(unCipherText(cylinder, key, "GRMYSGBOAAMQGDPEYVWLDFDQQQZXXVMSZFSE"))
+
 
 
