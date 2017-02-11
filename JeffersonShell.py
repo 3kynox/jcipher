@@ -66,9 +66,8 @@ def keyOK(key, n):
 def createKey(n):
     return random.sample(range(1, n + 1), n)
 
-#
+# Find index of letter parameter in a list
 def find(letter, alphabet):
-    print(alphabet)
     if letter.isupper():
         for i in range(len(alphabet)):
             if letter == alphabet[i]:
