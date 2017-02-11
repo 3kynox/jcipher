@@ -57,6 +57,10 @@ def main():
             mySurface.blit(renderText, (y, x))
             y = y + 40
 
+        text = 'ENTER THE KEY'
+        renderText = font.render(text, 0, (249, 0, 0))
+        mySurface.blit(renderText, (y + 25 , x))
+
     def rotateCylinder(cylinder, i, up = True):
         return True
 
