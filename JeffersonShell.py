@@ -66,6 +66,16 @@ def keyOK(key, n):
 def createKey(n):
     return random.sample(range(1, n + 1), n)
 
+#
+def find(letter, alphabet):
+    print(alphabet)
+    if letter.isupper():
+        for i in range(len(alphabet)):
+            if letter == alphabet[i]:
+                return i
+    else:
+        return 'Error: The first parameter must be an uppercase letter !'
+
 #################### TEST AREA ####################
 
 # Test function convertLetters()
@@ -79,6 +89,9 @@ def createKey(n):
 #print(loadCylinder('cylinderr.txt'))
 
 # Test keyOK() - createKey()
-myList = createKey(11)
-print(keyOK(myList, 11))
+#myList = createKey(11)
+#print(keyOK(myList, 11))
+
+# Test function find()
+print(find('L', mix()))
 
