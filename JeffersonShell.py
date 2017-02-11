@@ -68,12 +68,9 @@ def createKey(n):
 
 # Find index of letter parameter in a list
 def find(letter, alphabet):
-    if letter.isupper():
-        for i in range(len(alphabet)):
-            if letter == alphabet[i]:
-                return i
-    else:
-        return 'Error: The first parameter must be an uppercase letter !'
+    for i in range(len(alphabet)):
+        if letter == alphabet[i]:
+            return i
 
 # Return modulo [26] of (i + 6)
 def shift(i):
@@ -81,34 +78,25 @@ def shift(i):
 
 # Return letter + index of 6 in a circular way from a list
 def cipherLetter(letter, alphabet):
-    print(alphabet)
-    if letter.isupper():
-        i = find(letter, alphabet)
-        return alphabet[shift(i)]
-    else:
-        return 'Error: The first parameter must be an uppercase letter !'
+    return alphabet[shift(find(letter, alphabet))]
 
 #
 def cipherText(cylinder, key, text):
+    encryptedText = ''
+    
     if keyOK(key, len(cylinder)):
         text = convertLetters(text)
         
-        return text
+        for i, c in enumerate(text):
+            encryptedText += cipherLetter(c.upper(), cylinder[key[i]])
+        return encryptedText
     else:
         return 'Error: Invalid key !'
 
 #################### TEST AREA ####################
-
-# Test function find()
-#print(find('L', mix()))
-
-# Test function cipherLetter()
-print(cipherLetter('L', mix()))
-
 # Test function cipherText()
-createCylinder('cylinder.txt', 10)
+#createCylinder('cylinder.txt', 10)
 cylinder = loadCylinder('cylinder.txt')
-key = createKey(10)
-print(cylinder)
-print(key)
+#key = createKey(10)
+key = [1, 2, 10, 4, 7, 6, 9, 3, 5, 8]
 print(cipherText(cylinder, key, "Retreat Now"))
