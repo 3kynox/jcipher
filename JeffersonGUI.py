@@ -8,7 +8,7 @@ pygame.init()
 def main():
     # Init vars
     play_again = 1
-    size = width, height = 800, 600
+    size = width, height = 800, 700
     screen = pygame.display.set_mode(size)
     surface = pygame.Surface(screen.get_size())
     surface = surface.convert()
@@ -20,17 +20,30 @@ def main():
     
     # Functions
     def displayCylinder(mySurface, cylinder, i):
-        x = 0
+        # Missing "Le bon endroit ..."
+        x = 10
+        y = 10
         text = ''
         
         for c in range(len(cylinder[i])):
             text = cylinder[i][c]
             renderText = font.render(text, 0, (249, 0, 0))
-            mySurface.blit(renderText, (10, x + 10))
-            x = x + 20
+            mySurface.blit(renderText, (y, x))
+            x = x + 25
 
     def displayCylinders(mySurface, cylinder):
-        return True
+        x = 10
+        y = 10
+        text = ''
+
+        for i in range(1, len(cylinder)):
+            for c in range(len(cylinder[i])):
+                text = cylinder[i][c]
+                renderText = font.render(text, 0, (249, 0, 0))
+                mySurface.blit(renderText, (y, x))
+                x = x + 25
+            x = 10
+            y = y + 40
 
     def enterKey(mySurface, n):
         return True
@@ -43,7 +56,7 @@ def main():
 
     # Main Loop
     while play_again:
-        displayCylinder(surface, cylinder, 1)
+        displayCylinders(surface, cylinder)
         
         # Events loop
         for event in pygame.event.get():
