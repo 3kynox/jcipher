@@ -124,6 +124,20 @@ def main():
     def rotateCylinders(mySurface, cylinder):
         x = 2
         y = 20 + (26 * 25)
+        
+        clearText = 'CLEAR'
+        cipherText = 'CIPHER'
+        
+        renderClearText = font.render(clearText, 0, (249, 0, 0))
+        renderCipherText = font.render(cipherText, 0, (249, 0, 0))
+        surface.blit(renderClearText, (410 , 235))
+        surface.blit(renderCipherText, (410 , 385))
+        
+        pygame.draw.line(surface, (254, 0, 0), (5, 230), (395, 230))
+        pygame.draw.line(surface, (254, 0, 0), (5, 255), (395, 255))
+        pygame.draw.line(surface, (254, 0, 0), (5, 380), (395, 380))
+        pygame.draw.line(surface, (254, 0, 0), (5, 405), (395, 405))
+        
         for key, value in cylinder.items():
             upArrow = '>'
             downArrow = '<'
@@ -162,22 +176,12 @@ def main():
                 text = 'ENTER THE KEY'
             else:
                 text = 'FINISH'
-                clearText = 'CLEAR'
-                cipherText = 'CIPHER'
                 while keyComplete < n:
                     for key in myKeyList:
                         someCylinder = displayCylinder(surface, cylinder, key)
                         keyComplete += 1
                     cylinder = someCylinder
-                    pygame.draw.line(surface, (254, 0, 0), (5, 230), (395, 230))
-                    pygame.draw.line(surface, (254, 0, 0), (5, 255), (395, 255))
-                    pygame.draw.line(surface, (254, 0, 0), (5, 380), (395, 380))
-                    pygame.draw.line(surface, (254, 0, 0), (5, 405), (395, 405))
                 cylinder = rotateCylinders(surface, cylinder)
-                renderClearText = font.render(clearText, 0, (249, 0, 0))
-                renderCipherText = font.render(cipherText, 0, (249, 0, 0))
-                surface.blit(renderClearText, (410 , 235))
-                surface.blit(renderCipherText, (410 , 385))
         
             renderText = font.render(text, 0, (249, 0, 0))
             surface.blit(renderText, (410 , 700))
