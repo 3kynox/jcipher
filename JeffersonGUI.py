@@ -100,9 +100,16 @@ def main():
             upRender = pygame.transform.rotate(upRender, 90)
             downRender = fontBig.render(downArrow, 0, (249, 0, 0))
             downRender = pygame.transform.rotate(downRender, 90)
-            mySurface.blit(upRender, (x, y))
-            mySurface.blit(downRender, (x + 1, y + 25))
+            upRender = mySurface.blit(upRender, (x, y))
+            downRender = mySurface.blit(downRender, (x + 1, y + 25))
             x = x + 40
+
+            if event.type == MOUSEBUTTONDOWN and upRender.collidepoint(pygame.mouse.get_pos()):
+                print('up-' + str(key))
+
+            if event.type == MOUSEBUTTONDOWN and downRender.collidepoint(pygame.mouse.get_pos()):
+                print('down-' + str(key))
+                
 
     # Main Loop
     while play_again:
