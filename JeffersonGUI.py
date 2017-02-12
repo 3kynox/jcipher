@@ -24,10 +24,16 @@ def main():
     # Define later ability to load cylinder file
     cylinder = loadCylinder('cylinder.txt')
     n = len(cylinder)
+    newCylinder = {}
     
     # Functions
     def displayCylinder(mySurface, cylinder, i):
-        print(cylinder)
+        dictLen = len(newCylinder)
+        newCylinder[dictLen + 1] = cylinder[i]
+        if len(newCylinder) == n:
+            cylinder = newCylinder
+            mySurface.fill((0, 0, 0), (0, 0, 800, 720))
+            return cylinder
 
     def displayCylinders(mySurface, cylinder):
         x = 10
@@ -102,8 +108,12 @@ def main():
                 myKeyList = enterKey(surface, n)
                 text = 'ENTER THE KEY'
             else:
-                surface.fill((0,0,0), (10, 700, 800, 20))
                 text = 'FINISH'
+                while keyComplete < n:
+                    for key in myKeyList:
+                        someCylinder = displayCylinder(surface, cylinder, key)
+                        keyComplete += 1
+                    cylinder = someCylinder
         
             renderText = font.render(text, 0, (249, 0, 0))
             surface.blit(renderText, (420 , 700))
