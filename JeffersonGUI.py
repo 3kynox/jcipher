@@ -7,7 +7,7 @@ pygame.init()
 
 def main():
     # Init vars
-    global n, selectedItems, keyList
+    global n, selectedItems, keyList, myKeyList
     play_again = 1
     size = width, height = 800, 750
     screen = pygame.display.set_mode(size)
@@ -17,6 +17,9 @@ def main():
     font = pygame.font.Font('AgencyFB_Light_Wide.ttf', 20)
     selectedItems = {}
     keyList = []
+    myKeyList = []
+    keyComplete = 0
+    cylinderReloaded = 0
 
     # Define later ability to load cylinder file
     cylinder = loadCylinder('cylinder.txt')
@@ -24,16 +27,7 @@ def main():
     
     # Functions
     def displayCylinder(mySurface, cylinder, i):
-        # Missing "Le bon endroit ..."
-        x = 10
-        y = 10
-        text = ''
-        
-        for c in range(len(cylinder[i])):
-            text = cylinder[i][c]
-            renderText = font.render(text, 0, (249, 0, 0))
-            mySurface.blit(renderText, (y, x))
-            x = x + 25
+        print(cylinder)
 
     def displayCylinders(mySurface, cylinder):
         x = 10
@@ -80,13 +74,9 @@ def main():
 
         for a in keyList:
             keyText = str(a)
-            renderKey = font.render(keyText, 0, (255, 255, 255))
+            renderKey = font.render(keyText, 0, (249, 0, 0))
             mySurface.blit(renderKey, (v, w))
             v = v + 40
-
-        text = 'ENTER THE KEY'
-        renderText = font.render(text, 0, (249, 0, 0))
-        mySurface.blit(renderText, (y + 25 , x))
 
         return keyList
                 
@@ -107,8 +97,16 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
-            myKeyList = enterKey(surface, n)
+            
+            if len(myKeyList) != n:
+                myKeyList = enterKey(surface, n)
+                text = 'ENTER THE KEY'
+            else:
+                surface.fill((0,0,0), (10, 700, 800, 20))
+                text = 'FINISH'
+        
+            renderText = font.render(text, 0, (249, 0, 0))
+            surface.blit(renderText, (420 , 700))
         
         screen.blit(surface, (0, 0))
         pygame.display.flip()
