@@ -7,7 +7,7 @@ pygame.init()
 
 def main():
     # Init vars
-    global size, screen, surface, n, selectedItems, keyList, myKeyList
+    global size, screen, surface, n, selectedItems, keyList, myKeyList, reloadRender
     play_again = 1
     fontSmall = pygame.font.Font('AgencyFB_Light_Wide.ttf', 15)
     font = pygame.font.Font('AgencyFB_Light_Wide.ttf', 20)
@@ -179,13 +179,11 @@ def main():
 
             if event.type == MOUSEBUTTONDOWN and upRender.collidepoint(pygame.mouse.get_pos()):
                 cylinder = rotateCylinder(cylinder, key, True)
-                print(cylinder)
                 mySurface.fill((0, 0, 0), (0, 0, 800, 720))
                 return cylinder
 
             if event.type == MOUSEBUTTONDOWN and downRender.collidepoint(pygame.mouse.get_pos()):
                 cylinder = rotateCylinder(cylinder, key, False)
-                print(cylinder)
                 mySurface.fill((0, 0, 0), (0, 0, 800, 720))
                 return cylinder
         
@@ -212,6 +210,7 @@ def main():
                 surface.blit(renderText, ((len(cylinder) * 42), 700))
             else:
                 cipherMode = 1
+                surface.fill((0, 0, 0), ((len(cylinder) * 42), 700, 150, 20))
                 text = 'FINISH'
                 while keyComplete < n:
                     for key in myKeyList:
@@ -247,8 +246,11 @@ def main():
                     fileSave.write(output)
                     fileSave.close()
 
-                if event.type == MOUSEBUTTONDOWN and reloadRender.collidepoint(pygame.mouse.get_pos()):
-                    main()
+                try:
+                  if event.type == MOUSEBUTTONDOWN and reloadRender.collidepoint(pygame.mouse.get_pos()):
+                        main()
+                except NameError:
+                  continue
         
         screen.blit(surface, (0, 0))
         pygame.display.flip()
