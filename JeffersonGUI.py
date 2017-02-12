@@ -88,7 +88,38 @@ def main():
                 
 
     def rotateCylinder(cylinder, i, up = True):
-        return True
+        a = 1
+        myNewCylinder = {}
+        myStr = ''
+
+        while a < i:
+            myNewCylinder[a] = cylinder[a]
+            a += 1    
+        
+        if up == False:
+            for x in range(len(cylinder[i])):
+                if x == 25:
+                    break
+                if x == 0:
+                    myStr += cylinder[i][25]
+
+                myStr += cylinder[i][x]
+            myNewCylinder.update({i:myStr})
+
+        if up == True:
+            for x in range(len(cylinder[i])):
+                if x == 25:
+                    myStr += cylinder[i][0]
+                else:
+                    myStr += cylinder[i][x + 1]
+            myNewCylinder.update({i:myStr})
+
+        a += 1
+        while a <= n:
+            myNewCylinder[a] = cylinder[a]
+            a += 1
+        
+        return myNewCylinder
 
     def rotateCylinders(mySurface, cylinder):
         x = 2
@@ -106,10 +137,16 @@ def main():
 
             if event.type == MOUSEBUTTONDOWN and upRender.collidepoint(pygame.mouse.get_pos()):
                 print('up-' + str(key))
+                cylinder = rotateCylinder(cylinder, key, True)
+                mySurface.fill((0, 0, 0), (0, 0, 800, 720))
+                return cylinder
 
             if event.type == MOUSEBUTTONDOWN and downRender.collidepoint(pygame.mouse.get_pos()):
                 print('down-' + str(key))
-                
+                cylinder = rotateCylinder(cylinder, key, False)
+                mySurface.fill((0, 0, 0), (0, 0, 800, 720))
+                return cylinder
+        return cylinder
 
     # Main Loop
     while play_again:
@@ -132,7 +169,7 @@ def main():
                         someCylinder = displayCylinder(surface, cylinder, key)
                         keyComplete += 1
                     cylinder = someCylinder
-                rotateCylinders(surface, cylinder)
+                cylinder = rotateCylinders(surface, cylinder)
         
             renderText = font.render(text, 0, (249, 0, 0))
             surface.blit(renderText, (420 , 700))
