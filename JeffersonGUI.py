@@ -7,26 +7,36 @@ pygame.init()
 
 def main():
     # Init vars
-    global n, selectedItems, keyList, myKeyList
+    global size, screen, surface, n, selectedItems, keyList, myKeyList
     play_again = 1
-    size = width, height = 800, 750
-    screen = pygame.display.set_mode(size)
-    surface = pygame.Surface(screen.get_size())
-    surface = surface.convert()
-    surface.fill((0, 0, 0))
+    fontSmall = pygame.font.Font('AgencyFB_Light_Wide.ttf', 15)
     font = pygame.font.Font('AgencyFB_Light_Wide.ttf', 20)
     fontBig = pygame.font.Font('AgencyFB_Light_Wide.ttf', 30)
     selectedItems = {}
     keyList = []
     myKeyList = []
     keyComplete = 0
+    cipherMode = 0
 
     # Define later ability to load cylinder file
-    cylinder = loadCylinder('cylinderWiki.txt')
-    n = len(cylinder)
+    file = 'cylinder.txt'
+    cylinder = loadCylinder(file)
     newCylinder = {}
+    size = width, height = ((len(cylinder) * 40 + 220), 760)
+    screen = pygame.display.set_mode(size)
+    surface = pygame.Surface(screen.get_size())
+    surface = surface.convert()
+    surface.fill((0, 0, 0))
     
     # Functions
+    def addWheel(mySurface, cylinder):
+        createCylinder(file, (n + 1))
+        main()
+
+    def delWheel(mySurface, cylinder):
+        createCylinder(file, (n - 1))
+        main()
+    
     def displayCylinder(mySurface, cylinder, i):
         dictLen = len(newCylinder)
         newCylinder[dictLen + 1] = cylinder[i]
@@ -48,6 +58,24 @@ def main():
                 x = x + 25
             x = 10
             y = y + 40
+
+        if cipherMode == 0:
+            addWheelText = fontSmall.render("ADD WHEEL |", True, (249, 0, 0))
+            delWheelText = fontSmall.render("DEL WHEEL", True, (249, 0, 0))
+            addWheelSurface = surface.blit(addWheelText, ((len(cylinder) * 41),735,100,20))
+            delWheelSurface = surface.blit(delWheelText, ((len(cylinder) * 41 + 100),735,100,20))
+
+            if event.type == MOUSEBUTTONDOWN and addWheelSurface.collidepoint(pygame.mouse.get_pos()):
+                cylinder = addWheel(mySurface, cylinder)
+                return cylinder
+
+            if event.type == MOUSEBUTTONDOWN and delWheelSurface.collidepoint(pygame.mouse.get_pos()):
+                cylinder = delWheel(mySurface, cylinder)
+                return cylinder
+        else:
+            mySurface.fill((0, 0, 0), (len(cylinder) * 41, 735, 200, 20))
+
+        return cylinder
 
     def enterKey(mySurface, n):
         global wheelKeys
@@ -130,13 +158,13 @@ def main():
         
         renderClearText = font.render(clearText, 0, (249, 0, 0))
         renderCipherText = font.render(cipherText, 0, (249, 0, 0))
-        surface.blit(renderClearText, (410 , 235))
-        surface.blit(renderCipherText, (410 , 385))
+        surface.blit(renderClearText, ((len(cylinder) * 42), 235))
+        surface.blit(renderCipherText, ((len(cylinder) * 42), 385))
         
-        pygame.draw.line(surface, (254, 0, 0), (5, 230), (395, 230))
-        pygame.draw.line(surface, (254, 0, 0), (5, 255), (395, 255))
-        pygame.draw.line(surface, (254, 0, 0), (5, 380), (395, 380))
-        pygame.draw.line(surface, (254, 0, 0), (5, 405), (395, 405))
+        pygame.draw.line(surface, (254, 0, 0), (5, 230), ((len(cylinder) * 40), 230))
+        pygame.draw.line(surface, (254, 0, 0), (5, 255), ((len(cylinder) * 40), 255))
+        pygame.draw.line(surface, (254, 0, 0), (5, 380), ((len(cylinder) * 40), 380))
+        pygame.draw.line(surface, (254, 0, 0), (5, 405), ((len(cylinder) * 40), 405))
         
         for key, value in cylinder.items():
             upArrow = '>'
@@ -151,18 +179,21 @@ def main():
 
             if event.type == MOUSEBUTTONDOWN and upRender.collidepoint(pygame.mouse.get_pos()):
                 cylinder = rotateCylinder(cylinder, key, True)
+                print(cylinder)
                 mySurface.fill((0, 0, 0), (0, 0, 800, 720))
                 return cylinder
 
             if event.type == MOUSEBUTTONDOWN and downRender.collidepoint(pygame.mouse.get_pos()):
                 cylinder = rotateCylinder(cylinder, key, False)
+                print(cylinder)
                 mySurface.fill((0, 0, 0), (0, 0, 800, 720))
                 return cylinder
+        
         return cylinder
 
     # Main Loop
     while play_again:
-        displayCylinders(surface, cylinder)
+        n = len(cylinder)
         
         # Events loop
         for event in pygame.event.get():
@@ -171,10 +202,16 @@ def main():
                 pygame.quit()
                 sys.exit()
             
+            lambdaCylinder = displayCylinders(surface, cylinder)
+            cylinder = lambdaCylinder
+            
             if len(myKeyList) != n:
                 myKeyList = enterKey(surface, n)
                 text = 'ENTER THE KEY'
+                renderText = font.render(text, 0, (249, 0, 0))
+                surface.blit(renderText, ((len(cylinder) * 42), 700))
             else:
+                cipherMode = 1
                 text = 'FINISH'
                 while keyComplete < n:
                     for key in myKeyList:
@@ -182,9 +219,36 @@ def main():
                         keyComplete += 1
                     cylinder = someCylinder
                 cylinder = rotateCylinders(surface, cylinder)
-        
-            renderText = font.render(text, 0, (249, 0, 0))
-            surface.blit(renderText, (410 , 700))
+                renderText = font.render(text, 0, (249, 0, 0))
+                finishRender = surface.blit(renderText, ((len(cylinder) * 42), 700))
+
+                if event.type == MOUSEBUTTONDOWN and finishRender.collidepoint(pygame.mouse.get_pos()):
+                    text = 'RELOAD'
+                    renderText = font.render(text, 0, (249, 0, 0))
+                    reloadRender = surface.blit(renderText, ((len(cylinder) * 42), 670))
+                    fileSave = open('myCipher.txt', "w")
+                    output = 'CLEAR PHRASE  : '
+                    
+                    for i in range(1, n + 1):
+                        for c in range(len(cylinder[i])):
+                            if c == 9:
+                                output += cylinder[i][c]
+
+                    output += '\nCIPHER PHRASE : '
+                    
+                    for i in range(1, n + 1):
+                        for c in range(len(cylinder[i])):
+                            if c == 15:
+                                output += cylinder[i][c]
+                    
+                    output += '\nKEY CHAIN     : '
+                    output += str(myKeyList)
+
+                    fileSave.write(output)
+                    fileSave.close()
+
+                if event.type == MOUSEBUTTONDOWN and reloadRender.collidepoint(pygame.mouse.get_pos()):
+                    main()
         
         screen.blit(surface, (0, 0))
         pygame.display.flip()
