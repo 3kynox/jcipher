@@ -15,14 +15,14 @@ def main():
     surface = surface.convert()
     surface.fill((0, 0, 0))
     font = pygame.font.Font('AgencyFB_Light_Wide.ttf', 20)
+    fontBig = pygame.font.Font('AgencyFB_Light_Wide.ttf', 30)
     selectedItems = {}
     keyList = []
     myKeyList = []
     keyComplete = 0
-    cylinderReloaded = 0
 
     # Define later ability to load cylinder file
-    cylinder = loadCylinder('cylinder.txt')
+    cylinder = loadCylinder('cylinderWiki.txt')
     n = len(cylinder)
     newCylinder = {}
     
@@ -91,7 +91,18 @@ def main():
         return True
 
     def rotateCylinders(mySurface, cylinder):
-        return True
+        x = 2
+        y = 20 + (26 * 25)
+        for key, value in cylinder.items():
+            upArrow = '>'
+            downArrow = '<'
+            upRender = fontBig.render(upArrow, 0, (249, 0, 0))
+            upRender = pygame.transform.rotate(upRender, 90)
+            downRender = fontBig.render(downArrow, 0, (249, 0, 0))
+            downRender = pygame.transform.rotate(downRender, 90)
+            mySurface.blit(upRender, (x, y))
+            mySurface.blit(downRender, (x + 1, y + 25))
+            x = x + 40
 
     # Main Loop
     while play_again:
@@ -114,6 +125,7 @@ def main():
                         someCylinder = displayCylinder(surface, cylinder, key)
                         keyComplete += 1
                     cylinder = someCylinder
+                rotateCylinders(surface, cylinder)
         
             renderText = font.render(text, 0, (249, 0, 0))
             surface.blit(renderText, (420 , 700))
