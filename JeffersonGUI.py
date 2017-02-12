@@ -136,13 +136,11 @@ def main():
             x = x + 40
 
             if event.type == MOUSEBUTTONDOWN and upRender.collidepoint(pygame.mouse.get_pos()):
-                print('up-' + str(key))
                 cylinder = rotateCylinder(cylinder, key, True)
                 mySurface.fill((0, 0, 0), (0, 0, 800, 720))
                 return cylinder
 
             if event.type == MOUSEBUTTONDOWN and downRender.collidepoint(pygame.mouse.get_pos()):
-                print('down-' + str(key))
                 cylinder = rotateCylinder(cylinder, key, False)
                 mySurface.fill((0, 0, 0), (0, 0, 800, 720))
                 return cylinder
@@ -164,15 +162,25 @@ def main():
                 text = 'ENTER THE KEY'
             else:
                 text = 'FINISH'
+                clearText = 'CLEAR'
+                cipherText = 'CIPHER'
                 while keyComplete < n:
                     for key in myKeyList:
                         someCylinder = displayCylinder(surface, cylinder, key)
                         keyComplete += 1
                     cylinder = someCylinder
+                    pygame.draw.line(surface, (254, 0, 0), (5, 230), (395, 230))
+                    pygame.draw.line(surface, (254, 0, 0), (5, 255), (395, 255))
+                    pygame.draw.line(surface, (254, 0, 0), (5, 380), (395, 380))
+                    pygame.draw.line(surface, (254, 0, 0), (5, 405), (395, 405))
                 cylinder = rotateCylinders(surface, cylinder)
+                renderClearText = font.render(clearText, 0, (249, 0, 0))
+                renderCipherText = font.render(cipherText, 0, (249, 0, 0))
+                surface.blit(renderClearText, (410 , 235))
+                surface.blit(renderCipherText, (410 , 385))
         
             renderText = font.render(text, 0, (249, 0, 0))
-            surface.blit(renderText, (420 , 700))
+            surface.blit(renderText, (410 , 700))
         
         screen.blit(surface, (0, 0))
         pygame.display.flip()
